@@ -1,58 +1,40 @@
 import React from 'react';
-import { Card , CardBody ,CardImg, CardImgOverlay,CardText, CardHeader,CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card,CardImg,CardImgOverlay,CardTitle, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Media } from 'reactstrap';
 
-function RenderLeader({leaders}){
-  const Renderleader=leaders.map((leaders) =>{
-    return(
-        <div className="container">
-            <Media className="mt-5">
-                    <Media left>
-                    <Media object src={leaders.image} alt={leaders.name} />
-                    </Media>
-
-                <Media body className="ml-5">
-                    <Media heading>
-                     {leaders.name}
-                    </Media>
-                    <div>
-                     {leaders.designation}
-                    </div>
-                    <div className="mt-3">
-                        {leaders.description}
-                    </div>
-               </Media>
+function RenderLeader({leader})
+{
+  return(
+    <Media align media-block>
+        <Media left>
+            <img src={leader.image} alt={leader.name} className="media-logo"/>
+        </Media>
+          <Media body className="ml-5 mb-5">
+            <Media heading>
+              {leader.name}
             </Media>
-        </div>
-         );
-       });
-
-       return(
-        <div>
-            <div>
-                <h2>Corporate Leadership</h2>
-            </div>
-            <div className="mt-5 ">
-             {Renderleader}
-            </div>
-        </div>
-      );
-
+            <Media body className="mt-1 mb-1">
+            {leader.designation}
+            </Media>
+            {leader.description}
+          </Media>
+    </Media>
+  );
 }
 
+function About(props){
 
-
-function About(props) {
-  /*
     const leaders = props.leaders.map((leader) => {
         return (
-            <p>Leader {leader.name}</p>
+          <div>
+            <div key={leader.id} className="m-1">
+                 <RenderLeader leader={leader}/>
+            </div>
+            </div>
         );
     });
-   */
 
-   return(
+    return(
         <div className="container">
             <div className="row">
                 <Breadcrumb>
@@ -104,11 +86,16 @@ function About(props) {
             </div>
             <div className="row row-content">
                 <div className="col-12">
-                    <RenderLeader leaders={props.leaders}/>
+                    <h2>Corporate Leadership</h2>
+                </div>
+                <div className="col-12">
+                    <Media list>
+                        {leaders}
+                    </Media>
                 </div>
             </div>
         </div>
     );
 }
 
-export default About;    
+export default About;
