@@ -1,22 +1,24 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import {baseUrl} from '../shared/baseUrl';
 
 function RenderLeader({leader})
 {
   return(
     <Media align media-block>
         <Media left>
-            <img src={leader.image} alt={leader.name} className="media-logo"/>
+            <img src={baseUrl+leader.image} alt={leader.name} className="media-logo"/>
         </Media>
           <Media body className="ml-5 mb-5">
             <Media heading>
-              {leader.name}
+             {leader.name}
             </Media>
             <Media body className="mt-1 mb-1">
-            {leader.designation}
+             {leader.designation}
             </Media>
-            {leader.description}
+             {leader.description}
           </Media>
     </Media>
   );
@@ -24,16 +26,34 @@ function RenderLeader({leader})
 
 function About(props){
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
           <div>
             <div key={leader.id} className="m-1">
-                 <RenderLeader leader={leader}/>
+                 <RenderLeader leader={leader} />
             </div>
             </div>
         );
     });
-
+    if(props.leaders.isLoading){
+        return (
+            <div className="container">
+              <div className="row">
+                <Loading />
+              </div>
+            </div>
+        );
+      }
+      else if(props.leaders.errMess){
+        return (
+          <div className="container">
+            <div className="row">
+              <h4>{props.leaders.errMess}</h4>
+            </div>
+          </div>
+      );
+      }
+      else{
     return(
         <div className="container">
             <div className="row">
@@ -96,6 +116,7 @@ function About(props){
             </div>
         </div>
     );
+  }
 }
 
 export default About;
